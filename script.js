@@ -5,14 +5,20 @@ let audioElement= new Audio('Songs/1.mp3');
 let masterPlay=document.getElementById('masterPlay');
 let myProgressBar=document.getElementById('myProgressBar');
 let gif= document.getElementById('gif');
-
+let songItem= Array.from(document.getElementsByClassName('songItem'));
 let songs=[
-    {songname:"Sushant Kc-Sarangi",filePath:"./Songs/1.mp3",coverPath:"cover/1.jpg"},
-    {songname:"Sushant Kc-Sarangi",filePath:"Sarangi/2.mp3",coverPath:"cover/2.jpg"},
-    {songname:"Sushant Kc-Sarangi",filePath:"Sarangi/3.mp3",coverPath:"cover/3.jpg"},
-    {songname:"Sushant Kc-Sarangi",filePath:"Sarangi/4.mp3",coverPath:"cover/4.jpg"},
-    {songname:"Sushant Kc-Sarangi",filePath:"Sarangi/5.mp3",coverPath:"cover/5.jpg"},
+    {songName:"Sushant Kc-Sarangi",filePath:"Songs/1.mp3",coverPath:"Covers/1.jpg"},
+    {songName:"K garu tmro hunalai",filePath:"Songs/2.mp3",coverPath:"Covers/2.jpg"},
+    {songName:"Yabesh thapa-Aakhale",filePath:"Songs/3.mp3",coverPath:"Covers/3.jpg"},
+    {songName:"Naganya Maya",filePath:"Songs/4.mp3",coverPath:"Covers/4.jpg"},
+    {songName:"Sajjan raj-Dhairya",filePath:"Songs/5.mp3",coverPath:"Covers/5.jpg"},
  ]
+ songItem.forEach((element,i)=>{
+    // console.log(element,i)
+element.getElementsByTagName("img")[0].src=songs[i].coverPath;
+element.getElementsByClassName("songName")[0].innerText=songs[i].songName;
+
+ })
 // Handle play/pause
 masterPlay.addEventListener('click', ()=>{
     if(audioElement.paused || audioElement.currentTime<=0){
@@ -37,6 +43,25 @@ audioElement.addEventListener('timeupdate',()=>{
 })
 myProgressBar.addEventListener('change',()=>{
     audioElement.currentTime=myProgressBar.value*audioElement.duration/100
+})
+const makeAllPlay =()=>{
+    Array.from(document.getElementsByClassName('songItemPlay')).forEach((element)=>{
+        element.classList.remove('fa-pause-circle');
+        element.classList.add('fa-play-circle');
+    })
+}
+
+Array.from(document.getElementsByClassName('songItemPlay')).forEach((element)=>{
+    element.addEventListener('click',(e)=>{
+        console.log(e.target);
+        makeAllPlay();
+        e.target.classList.remove('fa-play-circle');
+        e.target.classList.add('fa-pause-circle');
+        audioElement.src= 'songs/1.mp3'
+        audioElement.currentTime=0;
+        audioElement.play();
+
+    })
 })
 
 
